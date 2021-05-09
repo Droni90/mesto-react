@@ -1,0 +1,22 @@
+.cards__like{
+  display: flex;
+  align-items: center;
+  transition: .5s;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  min-width: 22px;
+  height: 19px;
+  background-image: url(../../../images/like.svg);
+}
+
+.cards__like:focus{
+  outline: none;
+}
+
+.cards__like:hover{
+  opacity: .5;
+}
+

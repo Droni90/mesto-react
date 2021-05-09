@@ -1,0 +1,13 @@
+.footer__copywriter{
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+  margin: 0;
+  }
+
+  @media (max-width: 776px){
+    .footer__copywriter{
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }

@@ -1,0 +1,10 @@
+.profile__edit-avatar{
+  all: unset;
+  cursor: pointer;
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
