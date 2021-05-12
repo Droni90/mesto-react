@@ -18,6 +18,14 @@ const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) => {
       .catch(e => console.log(e))
   }, [])
 
+  //Обработчик лайка
+  const handleCardLike = (likes, cardId, currentUserId) => {
+    const isLiked = likes.some(like => like._id === currentUserId);
+    api.changeLikeCardStatus(cardId, isLiked).then((newCard) => {
+      const newCards = cards.map((card) => card._id === cardId ? newCard : card);
+      setCards(newCards);
+    });
+  }
   return(
     <main className="main">
       <section className="profile container">
@@ -40,8 +48,16 @@ const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) => {
 
       </section>
       <section className="cards container">
-        {cards.map(({link, name, likes, owner}, idx) => (
-          <Card link={link} name={name} likes={likes} onCardClick={onCardClick} owner={owner} key={`${name}_${idx}`} />
+        {cards.map(({link, _id, name, likes, owner}, idx) => (
+          <Card
+            link={link}
+            cardId={_id}
+            name={name}
+            likes={likes}
+            onCardClick={onCardClick}
+            onLikeClick={handleCardLike}
+            owner={owner}
+            key={`${name}_${idx}`} />
         ))}
       </section>
     </main>

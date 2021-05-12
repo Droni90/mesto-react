@@ -58,29 +58,22 @@ class Api {
       )
   }
   //Ставим лайк
-  putLike(cardId) {
-    const newOptions = {
+  changeLikeCardStatus(cardId, isLiked) {
+    const putOptions = {
       ...this._options,
       method:'PUT',
     }
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-23/cards/likes/${cardId}`, newOptions)
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject(`Ошибка: ${res.status}`)
-      )
-  }
-  //Удаляем лайк
-  removeLike(cardId) {
-    const newOptions = {
+    const delOptions = {
       ...this._options,
       method:'DELETE',
     }
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-23/cards/likes/${cardId}`, newOptions)
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-23/cards/likes/${cardId}`, isLiked ? delOptions : putOptions)
       .then(res => res.ok
         ? res.json()
         : Promise.reject(`Ошибка: ${res.status}`)
       )
   }
+
   //Обновляем аватар
   refreshAvatar(inputsValue) {
     const newOptions = {
