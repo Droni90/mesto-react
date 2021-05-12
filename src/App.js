@@ -7,6 +7,7 @@ import PopupWithImage from "./components/PopupWithImage";
 import api from "./utils/Api";
 import CurrentUserContext from "./contexts/CurrentUserContext";
 import EditProfilePopup from "./components/EditProfilePopup";
+import EditAvatarPopup from "./components/EditAvatarPopup";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
@@ -50,13 +51,19 @@ function App() {
     setSelectedCard({ isOpened: false })
   }
   //обработчик информации о пользователе
-  const handleUpdateUser = ({name, about}) => {
-    api.patchProfileInfo(currentUser).then(() => {
-      setCurrentUser({name, about})
+  const handleUpdateUser = (userInfo) => {
+    api.patchProfileInfo(userInfo).then((data) => {
+      setCurrentUser(data)
       closeAllPopups()
     })
   }
-
+  //обработчик обновления аватара
+  const handleUpdateAvatar = (avatar) => {
+    api.refreshAvatar(avatar).then((data) => {
+      setCurrentUser(data)
+      closeAllPopups()
+    })
+  }
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='roof'>
@@ -72,6 +79,9 @@ function App() {
         </div>
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+
         <PopupWithForm name='add' title='Новое место' isOpen={isAddPlacePopupOpen} container='popup__container' onClose={closeAllPopups}>
           <input name="name" type="text" id="popup__name-add" className="popup__input" placeholder="Название" required minLength="2" maxLength="30" />
           <span className="popup__name-add-error" />
@@ -79,10 +89,6 @@ function App() {
           <span className="popup__link-add-error" />
         </PopupWithForm>
 
-        <PopupWithForm name='refresh' title='Обновить аватар' isOpen={isEditAvatarPopupOpen} container='popup__container popup__container_size_mini' onClose={closeAllPopups}>
-          <input name="avatar" type="url" id="popup__link-refresh" className="popup__input popup__input_type_refresh" placeholder="Ссылка на аватар" required />
-          <span className="popup__link-refresh-error" />
-        </PopupWithForm>
 
         <PopupWithImage onClose={closeAllPopups} card={selectedCard} />
       </div>
