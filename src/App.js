@@ -8,11 +8,39 @@ import api from "./utils/Api";
 import CurrentUserContext from "./contexts/CurrentUserContext";
 import EditProfilePopup from "./components/EditProfilePopup";
 import EditAvatarPopup from "./components/EditAvatarPopup";
+import AddPlacePopup from "./components/AddPlacePopup";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [cards, setCards] = useState([])
+
+  useEffect(() => {
+    api.getInitialCards()
+      .then((data) => {
+        setCards(data)
+      })
+      .catch(e => console.log(e))
+  }, [])
+
+  //Обработчик лайка
+  const handleCardLike = (likes, cardId, currentUserId) => {
+    const isLiked = likes.some(like => like._id === currentUserId);
+    api.changeLikeCardStatus(cardId, isLiked).then((newCard) => {
+      const newCards = cards.map((card) => card._id === cardId ? newCard : card);
+      setCards(newCards);
+    });
+  }
+  // обработчик удаление карточки
+  const handleCardDelete = (cardId) => {
+    api.removeCard(cardId).then(() => {
+      const newCards = cards.filter(card => card._id !== cardId)
+      setCards(newCards)
+    })
+  }
+
+  // -----------------------------------
 
   const [currentUser, setCurrentUser] = useState({})
   useEffect(() => {
@@ -64,6 +92,12 @@ function App() {
       closeAllPopups()
     })
   }
+  const handleAddPlaceSubmit = newCard => {
+    api.patchAddCard(newCard).then((newCard) => {
+      setCards([newCard, ...cards])
+      closeAllPopups()
+    })
+  }
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='roof'>
@@ -74,6 +108,9 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
           />
           <Footer />
         </div>
@@ -82,13 +119,7 @@ function App() {
 
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
-        <PopupWithForm name='add' title='Новое место' isOpen={isAddPlacePopupOpen} container='popup__container' onClose={closeAllPopups}>
-          <input name="name" type="text" id="popup__name-add" className="popup__input" placeholder="Название" required minLength="2" maxLength="30" />
-          <span className="popup__name-add-error" />
-          <input name="link" type="url" id="popup__link-add" className="popup__input" placeholder="Ссылка на картинку" required />
-          <span className="popup__link-add-error" />
-        </PopupWithForm>
-
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
 
         <PopupWithImage onClose={closeAllPopups} card={selectedCard} />
       </div>

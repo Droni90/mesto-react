@@ -1,38 +1,15 @@
 import editButton from "../images/EditButton.svg";
 import plus from "../images/plus.svg";
-import {useContext, useEffect, useState} from "react";
-import api from '../utils/Api'
+import {useContext} from "react";
 import Card from "./Card";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) => {
+const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete}) => {
 
-  const [cards, setCards] = useState([])
+
   const { name, avatar, about } = useContext(CurrentUserContext)
 
-  useEffect(() => {
-    api.getInitialCards()
-      .then((data) => {
-      setCards(data)
-    })
-      .catch(e => console.log(e))
-  }, [])
 
-  //Обработчик лайка
-  const handleCardLike = (likes, cardId, currentUserId) => {
-    const isLiked = likes.some(like => like._id === currentUserId);
-    api.changeLikeCardStatus(cardId, isLiked).then((newCard) => {
-      const newCards = cards.map((card) => card._id === cardId ? newCard : card);
-      setCards(newCards);
-    });
-  }
- // обработчик удаление карточки
-  const handleCardDelete = (cardId) => {
-    api.removeCard(cardId).then(() => {
-      const newCards = cards.filter(card => card._id !== cardId)
-      setCards(newCards)
-    })
-  }
   return(
     <main className="main">
       <section className="profile container">
@@ -62,8 +39,8 @@ const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) => {
             name={name}
             likes={likes}
             onCardClick={onCardClick}
-            onLikeClick={handleCardLike}
-            onCardDelete={handleCardDelete}
+            onLikeClick={onCardLike}
+            onCardDelete={onCardDelete}
             owner={owner}
             key={`${name}_${idx}`} />
         ))}
