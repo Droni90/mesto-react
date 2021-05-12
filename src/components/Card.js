@@ -1,7 +1,7 @@
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import {useContext} from "react";
 
-const Card = ({name, likes, link, onCardClick,onLikeClick, owner, cardId}) => {
+const Card = ({name, likes, link, onCardClick, onLikeClick, onCardDelete , owner, cardId}) => {
 
   const currentUserId = useContext(CurrentUserContext)._id
 
@@ -13,6 +13,10 @@ const Card = ({name, likes, link, onCardClick,onLikeClick, owner, cardId}) => {
     onLikeClick(likes, cardId, currentUserId)
   }
 
+  const handleDeleteClick = () => {
+    onCardDelete(cardId)
+  }
+
   //Проверка на свою карточку и лайк
   const isOwn = owner._id === currentUserId;
   const isLiked = likes.some(like => like._id === currentUserId);
@@ -20,7 +24,7 @@ const Card = ({name, likes, link, onCardClick,onLikeClick, owner, cardId}) => {
   return(
     <article className="cards__item">
       <img onClick={handleClick} src={link} alt={name} className="cards__img" />
-      <button type="button" className={`cards__delete ${isOwn ? 'cards__delete_on' : ''}`} />
+      <button onClick={handleDeleteClick} type="button" className={`cards__delete ${isOwn ? 'cards__delete_on' : ''}`} />
       <div className="cards__info">
         <h2 className="cards__text">{name}</h2>
         <div className="cards__like-box">

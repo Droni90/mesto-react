@@ -26,6 +26,13 @@ const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) => {
       setCards(newCards);
     });
   }
+ // обработчик удаление карточки
+  const handleCardDelete = (cardId) => {
+    api.removeCard(cardId).then(() => {
+      const newCards = cards.filter(card => card._id !== cardId)
+      setCards(newCards)
+    })
+  }
   return(
     <main className="main">
       <section className="profile container">
@@ -56,6 +63,7 @@ const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) => {
             likes={likes}
             onCardClick={onCardClick}
             onLikeClick={handleCardLike}
+            onCardDelete={handleCardDelete}
             owner={owner}
             key={`${name}_${idx}`} />
         ))}
