@@ -13,7 +13,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({
     isOpened: false,
   })
-
+  // обработчик для открытия картинки
   const handleCardClick = ({link, name, isOpened}) => {
     setSelectedCard({
       link,
@@ -21,7 +21,7 @@ function App() {
       isOpened: !isOpened,
     })
   }
-
+// Обработчики открытия/закрытия попапов
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen)
   }
