@@ -17,6 +17,7 @@ const AddPlacePopup = ({isOpen, onClose, onAddPlace, hidePopupByClickAround}) =>
       url: name,
       link: link,
     })
+    evt.target.reset()
   }
   return(
     <PopupWithForm name='add' title='Новое место' isOpen={isOpen} container='popup__container' hidePopupByClickAround={hidePopupByClickAround} onClose={onClose} handleSubmit={handleSubmit}>
