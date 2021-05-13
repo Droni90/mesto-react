@@ -2,9 +2,7 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import {useContext} from "react";
 
 const Card = ({name, likes, link, onCardClick, onLikeClick, onCardDelete , owner, cardId}) => {
-
   const currentUserId = useContext(CurrentUserContext)._id
-
   const handleClick = () => {
     onCardClick({name, link})
   }

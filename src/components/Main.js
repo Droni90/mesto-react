@@ -5,10 +5,7 @@ import Card from "./Card";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete}) => {
-
-
   const { name, avatar, about } = useContext(CurrentUserContext)
-
 
   return(
     <main className="main">
@@ -29,7 +26,6 @@ const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCa
         <button onClick={onAddPlace} className="profile__add-button">
           <img src={plus} alt="добавить" className="profile__add-button-icon" />
         </button>
-
       </section>
       <section className="cards container">
         {cards.map(({link, _id, name, likes, owner}, idx) => (

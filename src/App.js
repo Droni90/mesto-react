@@ -1,7 +1,6 @@
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
-import PopupWithForm from "./components/PopupWithForm";
 import {useEffect, useState} from "react";
 import PopupWithImage from "./components/PopupWithImage";
 import api from "./utils/Api";
@@ -15,6 +14,18 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [cards, setCards] = useState([])
+  const [currentUser, setCurrentUser] = useState({})
+  const [selectedCard, setSelectedCard] = useState({
+    isOpened: false,
+  })
+
+  useEffect(() => {
+    api.getUserInfo()
+      .then((data) => {
+        setCurrentUser(data)
+      })
+      .catch(e => console.log(e))
+  }, [])
 
   useEffect(() => {
     api.getInitialCards()
@@ -40,28 +51,6 @@ function App() {
     })
   }
 
-  // -----------------------------------
-
-  const [currentUser, setCurrentUser] = useState({})
-  useEffect(() => {
-    api.getUserInfo()
-      .then((data) => {
-        setCurrentUser(data)
-      })
-      .catch(e => console.log(e))
-  }, [])
-
-  const [selectedCard, setSelectedCard] = useState({
-    isOpened: false,
-  })
-  // обработчик для открытия картинки
-  const handleCardClick = ({link, name, isOpened}) => {
-    setSelectedCard({
-      link,
-      name,
-      isOpened: !isOpened,
-    })
-  }
 // Обработчики открытия/закрытия попапов
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen)
@@ -92,10 +81,19 @@ function App() {
       closeAllPopups()
     })
   }
+  //обработчик сабмита добавление картинки
   const handleAddPlaceSubmit = newCard => {
     api.patchAddCard(newCard).then((newCard) => {
       setCards([newCard, ...cards])
       closeAllPopups()
+    })
+  }
+  // обработчик для открытия картинки
+  const handleCardClick = ({link, name, isOpened}) => {
+    setSelectedCard({
+      link,
+      name,
+      isOpened: !isOpened,
     })
   }
   return (
@@ -114,14 +112,25 @@ function App() {
           />
           <Footer />
         </div>
-
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
-
-        <PopupWithImage onClose={closeAllPopups} card={selectedCard} />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+        />
+        <PopupWithImage
+          onClose={closeAllPopups}
+          card={selectedCard}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
