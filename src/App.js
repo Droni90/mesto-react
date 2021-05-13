@@ -96,6 +96,21 @@ function App() {
       isOpened: !isOpened,
     })
   }
+  //Закрытие попапа по клику вне формы
+  const hidePopupByClickAround = (evt) => {
+    if(evt.target.classList.contains('popup_status_opened')){
+      closeAllPopups()
+    }
+  }
+  //закрытие попапов по клику на Еск
+  useEffect(() => {
+    const handleEscClose = (evt) => {
+      if(evt.key === 'Escape') closeAllPopups()
+    }
+    window.addEventListener('keyup', handleEscClose);
+    return () => window.removeEventListener('keyup', handleEscClose);
+  }, []);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='roof'>
@@ -116,20 +131,24 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          hidePopupByClickAround={hidePopupByClickAround}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          hidePopupByClickAround={hidePopupByClickAround}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          hidePopupByClickAround={hidePopupByClickAround}
         />
         <PopupWithImage
           onClose={closeAllPopups}
           card={selectedCard}
+          hidePopupByClickAround={hidePopupByClickAround}
         />
       </div>
     </CurrentUserContext.Provider>
