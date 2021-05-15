@@ -1,24 +1,12 @@
-import close from "../images/Close.svg";
+import PopupWithForm from "./PopupWithForm";
 
-const PopupConfirm = () => {
+const PopupConfirm = ({isOpen, onClose, hidePopupByClickAround, waiting, onConfirm}) => {
+  const handleSubmit = (evt) => {
+    evt.preventDefault()
+    onConfirm('123')
+  }
   return(
-    <div className="popup popup_type_confirm">
-      <form id="form-remove" className="popup__container popup__container_size_mini">
-        <button
-          type="button"
-          id="close-remove"
-          className="popup__close"
-        >
-          <img
-            className="popup__close-icon"
-            src={close}
-            alt="закрыть"
-          />
-        </button>
-        <h2 className="popup__title">Вы уверены?</h2>
-        <button type="submit" className="popup__submit popup__submit_edit">Да</button>
-      </form>
-    </div>
+    <PopupWithForm name='confirm' title='Вы уверены?' container='popup__container popup__container_size_mini'  handleSubmit={handleSubmit} isOpen={isOpen} onClose={onClose} hidePopupByClickAround={hidePopupByClickAround} waiting={waiting} />
   )
 }
 

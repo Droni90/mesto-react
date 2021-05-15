@@ -1,7 +1,7 @@
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import {useContext} from "react";
 
-const Card = ({name, likes, link, onCardClick, onLikeClick, onCardDelete , owner, cardId}) => {
+const Card = ({name, likes, link, onCardClick, onLikeClick, onCardDelete , owner, cardId, getCardId }) => {
   const currentUserId = useContext(CurrentUserContext)._id
   const handleClick = () => {
     onCardClick({name, link})
@@ -12,7 +12,8 @@ const Card = ({name, likes, link, onCardClick, onLikeClick, onCardDelete , owner
   }
 
   const handleDeleteClick = () => {
-    onCardDelete(cardId)
+    onCardDelete()
+    getCardId(cardId)
   }
 
   //Проверка на свою карточку и лайк

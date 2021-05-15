@@ -8,12 +8,15 @@ import CurrentUserContext from "./contexts/CurrentUserContext";
 import EditProfilePopup from "./components/EditProfilePopup";
 import EditAvatarPopup from "./components/EditAvatarPopup";
 import AddPlacePopup from "./components/AddPlacePopup";
+import PopupConfirm from "./components/PopupConfirm";
 
 function App() {
-  const [waiting, setWaiting] = useState('') // Состояние названия кнопки во время ожидания
+  const [waiting, setWaiting] = useState(null) // Состояние названия кнопки во время ожидания
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [cardId, setCardId] = useState(null)           // Для получения ID карточки
   const [cards, setCards] = useState([])
   const [currentUser, setCurrentUser] = useState({})
   const [selectedCard, setSelectedCard] = useState({
@@ -44,13 +47,6 @@ function App() {
       setCards(newCards);
     });
   }
-  // обработчик удаление карточки
-  const handleCardDelete = (cardId) => {
-    api.removeCard(cardId).then(() => {
-      const newCards = cards.filter(card => card._id !== cardId)
-      setCards(newCards)
-    })
-  }
 
 // Обработчики открытия/закрытия попапов
   const handleEditProfileClick = () => {
@@ -62,17 +58,22 @@ function App() {
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen)
   }
+  const handleConfirmClick = () => {
+    setIsConfirmPopupOpen(!isConfirmPopupOpen)
+  }
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
+    setIsConfirmPopupOpen(false)
     setSelectedCard({ isOpened: false })
   }
+
   //обработчик информации о пользователе
   const handleUpdateUser = (userInfo) => {
     api.patchProfileInfo(userInfo).then((data) => {
       setCurrentUser(data)
-      setWaiting('')
+      setWaiting(null)
       closeAllPopups()
     })
     setWaiting('Сохранение...')
@@ -81,16 +82,28 @@ function App() {
   const handleUpdateAvatar = (avatar) => {
     api.refreshAvatar(avatar).then((data) => {
       setCurrentUser(data)
-      setWaiting('')
+      setWaiting(null)
       closeAllPopups()
     })
     setWaiting('Сохранение...')
   }
+
+  // обработчик удаление карточки
+  const handleCardDelete = () => {
+    api.removeCard(cardId).then(() => {
+      const newCards = cards.filter(card => card._id !== cardId)
+      setWaiting(null)
+      setCards(newCards)
+      closeAllPopups()
+    })
+    setWaiting('Удаление...')
+  }
+
   //обработчик сабмита добавление картинки
   const handleAddPlaceSubmit = newCard => {
     api.patchAddCard(newCard).then((newCard) => {
       setCards([newCard, ...cards])
-      setWaiting('')
+      setWaiting(null)
       closeAllPopups()
     })
     setWaiting('Добавление...')
@@ -128,9 +141,10 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
+            onCardDelete={handleConfirmClick}
             cards={cards}
             onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
+            getCardId={setCardId}
           />
           <Footer />
         </div>
@@ -159,6 +173,13 @@ function App() {
           onClose={closeAllPopups}
           card={selectedCard}
           hidePopupByClickAround={hidePopupByClickAround}
+        />
+        <PopupConfirm
+          isOpen={isConfirmPopupOpen}
+          onClose={closeAllPopups}
+          hidePopupByClickAround={hidePopupByClickAround}
+          onConfirm={handleCardDelete}
+          waiting={ waiting || 'Да' }
         />
       </div>
     </CurrentUserContext.Provider>

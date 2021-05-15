@@ -4,7 +4,7 @@ import {useContext} from "react";
 import Card from "./Card";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete}) => {
+const Main = ({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete, getCardId }) => {
   const { name, avatar, about } = useContext(CurrentUserContext)
 
   return(
@@ -38,6 +38,7 @@ const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCa
             onLikeClick={onCardLike}
             onCardDelete={onCardDelete}
             owner={owner}
+            getCardId={getCardId}
             key={`${name}_${idx}`} />
         ))}
       </section>
