@@ -1,6 +1,6 @@
 import close from "../images/Close.svg";
 
-const PopupWithForm = ({ name, title, isOpen, container, onClose, children, handleSubmit, hidePopupByClickAround}) => {
+const PopupWithForm = ({ name, title, isOpen, container, onClose, children, handleSubmit, hidePopupByClickAround, waiting }) => {
   return(
     <div onMouseDown={hidePopupByClickAround} className={isOpen ? `popup popup_type_${name} popup_status_opened` : `popup popup_type_${name}`}>
       <form onSubmit={handleSubmit} name={name} className={container} noValidate>
@@ -9,7 +9,7 @@ const PopupWithForm = ({ name, title, isOpen, container, onClose, children, hand
         </button>
         <h2 className="popup__title">{title}</h2>
         { children }
-        <button type="submit" className="popup__submit popup__submit_edit">Сохранить</button>
+        <button type="submit" className="popup__submit popup__submit_edit">{ waiting }</button>
       </form>
     </div>
   )

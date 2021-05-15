@@ -10,6 +10,7 @@ import EditAvatarPopup from "./components/EditAvatarPopup";
 import AddPlacePopup from "./components/AddPlacePopup";
 
 function App() {
+  const [waiting, setWaiting] = useState('') // Состояние названия кнопки во время ожидания
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
@@ -71,22 +72,28 @@ function App() {
   const handleUpdateUser = (userInfo) => {
     api.patchProfileInfo(userInfo).then((data) => {
       setCurrentUser(data)
+      setWaiting('')
       closeAllPopups()
     })
+    setWaiting('Сохранение...')
   }
   //обработчик обновления аватара
   const handleUpdateAvatar = (avatar) => {
     api.refreshAvatar(avatar).then((data) => {
       setCurrentUser(data)
+      setWaiting('')
       closeAllPopups()
     })
+    setWaiting('Сохранение...')
   }
   //обработчик сабмита добавление картинки
   const handleAddPlaceSubmit = newCard => {
     api.patchAddCard(newCard).then((newCard) => {
       setCards([newCard, ...cards])
+      setWaiting('')
       closeAllPopups()
     })
+    setWaiting('Добавление...')
   }
   // обработчик для открытия картинки
   const handleCardClick = ({link, name, isOpened}) => {
@@ -132,18 +139,21 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           hidePopupByClickAround={hidePopupByClickAround}
+          waiting={waiting || 'Сохранить'}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
           hidePopupByClickAround={hidePopupByClickAround}
+          waiting={waiting || 'Сохранить'}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
           hidePopupByClickAround={hidePopupByClickAround}
+          waiting={waiting || 'Добавить'}
         />
         <PopupWithImage
           onClose={closeAllPopups}

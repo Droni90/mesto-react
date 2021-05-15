@@ -1,7 +1,7 @@
 import PopupWithForm from "./PopupWithForm";
 import {useState} from "react";
 
-const AddPlacePopup = ({isOpen, onClose, onAddPlace, hidePopupByClickAround}) => {
+const AddPlacePopup = ({isOpen, onClose, onAddPlace, hidePopupByClickAround, waiting}) => {
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
   const onChaneName = (evt) => {
@@ -20,7 +20,7 @@ const AddPlacePopup = ({isOpen, onClose, onAddPlace, hidePopupByClickAround}) =>
     evt.target.reset()
   }
   return(
-    <PopupWithForm name='add' title='Новое место' isOpen={isOpen} container='popup__container' hidePopupByClickAround={hidePopupByClickAround} onClose={onClose} handleSubmit={handleSubmit}>
+    <PopupWithForm name='add' title='Новое место' isOpen={isOpen} container='popup__container' waiting={waiting} hidePopupByClickAround={hidePopupByClickAround} onClose={onClose} handleSubmit={handleSubmit}>
       <input onChange={onChaneName} name="name" type="text" id="popup__name-add" className="popup__input" placeholder="Название" required minLength="2" maxLength="30" />
       <span className="popup__name-add-error" />
       <input onChange={onChaneLink} name="link" type="url" id="popup__link-add" className="popup__input" placeholder="Ссылка на картинку" required />
