@@ -1,8 +1,9 @@
 
 const Footer = () => {
+  const year = new Date().getFullYear();
   return(
     <footer className="footer container">
-      <p className="footer__copywriter">&copy; 2020 Mesto Russia</p>
+      <p className="footer__copywriter">&copy; {year}</p>
     </footer>
   )
 }

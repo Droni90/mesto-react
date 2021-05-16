@@ -24,20 +24,14 @@ function App() {
   })
 
   useEffect(() => {
-    api.getUserInfo()
-      .then((data) => {
-        setCurrentUser(data)
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([userData, cardsData]) => {
+        setCurrentUser(userData)
+        setCards(cardsData)
       })
       .catch(e => console.log(e))
   }, [])
 
-  useEffect(() => {
-    api.getInitialCards()
-      .then((data) => {
-        setCards(data)
-      })
-      .catch(e => console.log(e))
-  }, [])
 
   //Обработчик лайка
   const handleCardLike = (likes, cardId, currentUserId) => {

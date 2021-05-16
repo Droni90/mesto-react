@@ -39,7 +39,7 @@ const Main = ({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onC
             onCardDelete={onCardDelete}
             owner={owner}
             getCardId={getCardId}
-            key={`${name}_${idx}`} />
+            key={_id} />
         ))}
       </section>
     </main>
