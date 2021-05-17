@@ -6,7 +6,16 @@ const PopupConfirm = ({isOpen, onClose, hidePopupByClickAround, waiting, onConfi
     onConfirm('123')
   }
   return(
-    <PopupWithForm name='confirm' title='Вы уверены?' container='popup__container popup__container_size_mini'  handleSubmit={handleSubmit} isOpen={isOpen} onClose={onClose} hidePopupByClickAround={hidePopupByClickAround} waiting={waiting} />
+    <PopupWithForm
+      name='confirm'
+      title='Вы уверены?'
+      container='popup__container popup__container_size_mini'
+      handleSubmit={handleSubmit}
+      isOpen={isOpen}
+      onClose={onClose}
+      hidePopupByClickAround={hidePopupByClickAround}
+      waiting={waiting}
+    />
   )
 }
 

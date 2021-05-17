@@ -24,10 +24,41 @@ const EditProfilePopup = ({isOpen, onClose, onUpdateUser, hidePopupByClickAround
     })
   }
   return(
-    <PopupWithForm name='edit' title='Редактировать профиль' container='popup__container' waiting={waiting} handleSubmit={handleSubmit} isOpen={isOpen} onClose={onClose} hidePopupByClickAround={hidePopupByClickAround}>
-      <input onChange={onChangeName} value={name || ''} name="name" type="text" id="popup__name" className="popup__input" placeholder="Имя" required minLength="2" maxLength="40" />
+    <PopupWithForm
+      name='edit'
+      title='Редактировать профиль'
+      container='popup__container'
+      waiting={waiting}
+      handleSubmit={handleSubmit}
+      isOpen={isOpen}
+      onClose={onClose}
+      hidePopupByClickAround={hidePopupByClickAround}
+    >
+      <input
+        onChange={onChangeName}
+        value={name || ''}
+        name="name"
+        type="text"
+        id="popup__name"
+        className="popup__input"
+        placeholder="Имя"
+        required
+        minLength="2"
+        maxLength="40"
+      />
       <span className="popup__name-error" />
-      <input onChange={onChangeDescription} value={description || ''} name="about" type="text" id="popup__about" className="popup__input" placeholder="Вид деятельности" required minLength="2" maxLength="200" />
+      <input
+        onChange={onChangeDescription}
+        value={description || ''}
+        name="about"
+        type="text"
+        id="popup__about"
+        className="popup__input"
+        placeholder="Вид деятельности"
+        required
+        minLength="2"
+        maxLength="200"
+      />
       <span className="popup__about-error" />
     </PopupWithForm>
   )

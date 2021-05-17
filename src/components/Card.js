@@ -22,12 +22,24 @@ const Card = ({name, likes, link, onCardClick, onLikeClick, onCardDelete , owner
 
   return(
     <article className="cards__item">
-      <img onClick={handleClick} src={link} alt={name} className="cards__img" />
-      <button onClick={handleDeleteClick} type="button" className={`cards__delete ${isOwn ? 'cards__delete_on' : ''}`} />
+      <img
+        onClick={handleClick}
+        src={link}
+        alt={name}
+        className="cards__img"
+      />
+      <button
+        onClick={handleDeleteClick}
+        type="button"
+        className={`cards__delete ${isOwn ? 'cards__delete_on' : ''}`}
+      />
       <div className="cards__info">
         <h2 className="cards__text">{name}</h2>
         <div className="cards__like-box">
-          <button onClick={handleLikeClick} className={`cards__like ${isLiked ? 'cards__like_status_active' : ''}`} />
+          <button
+            onClick={handleLikeClick}
+            className={`cards__like ${isLiked ? 'cards__like_status_active' : ''}`}
+          />
           <span className="cards__likes-counter">{likes.length}</span>
         </div>
       </div>

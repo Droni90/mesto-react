@@ -10,7 +10,12 @@ const Main = ({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onC
   return(
     <main className="main">
       <section className="profile container">
-        <button onClick={onEditAvatar} type="button" className="profile__edit-avatar" style={{ backgroundImage: `url(${avatar})` }}>
+        <button
+          onClick={onEditAvatar}
+          type="button"
+          className="profile__edit-avatar"
+          style={{ backgroundImage: `url(${avatar})` }}
+        >
           <div className="profile__avatar-overlay" />
         </button>
         <div className="profile__info">
@@ -28,7 +33,7 @@ const Main = ({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onC
         </button>
       </section>
       <section className="cards container">
-        {cards.map(({link, _id, name, likes, owner}, idx) => (
+        {cards.map(({link, _id, name, likes, owner}) => (
           <Card
             link={link}
             cardId={_id}

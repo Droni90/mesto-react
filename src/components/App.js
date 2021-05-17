@@ -1,14 +1,14 @@
-import Header from "./components/Header";
-import Main from "./components/Main";
-import Footer from "./components/Footer";
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
 import {useEffect, useState} from "react";
-import PopupWithImage from "./components/PopupWithImage";
-import api from "./utils/Api";
-import CurrentUserContext from "./contexts/CurrentUserContext";
-import EditProfilePopup from "./components/EditProfilePopup";
-import EditAvatarPopup from "./components/EditAvatarPopup";
-import AddPlacePopup from "./components/AddPlacePopup";
-import PopupConfirm from "./components/PopupConfirm";
+import PopupWithImage from "./PopupWithImage";
+import api from "../utils/Api";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
+import PopupConfirm from "./PopupConfirm";
 
 function App() {
   const [waiting, setWaiting] = useState(null) // Состояние названия кнопки во время ожидания
@@ -31,7 +31,6 @@ function App() {
       })
       .catch(e => console.log(e))
   }, [])
-
 
   //Обработчик лайка
   const handleCardLike = (likes, cardId, currentUserId) => {
@@ -179,5 +178,4 @@ function App() {
     </CurrentUserContext.Provider>
   );
 }
-
 export default App;
