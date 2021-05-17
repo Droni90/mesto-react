@@ -1,6 +1,6 @@
 import close from "../images/Close.svg";
 
-const PopupWithImage = ({card, onClose, hidePopupByClickAround}) => {
+const ImagePopup = ({card, onClose, hidePopupByClickAround}) => {
   return(
     <div
       className={card.isOpened ? `popup popup_type_photo popup_status_opened` : `popup popup_type_photo`}
@@ -17,4 +17,4 @@ const PopupWithImage = ({card, onClose, hidePopupByClickAround}) => {
   )
 }
 
-export default PopupWithImage;
+export default ImagePopup;

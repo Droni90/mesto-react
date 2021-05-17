@@ -2,7 +2,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import {useEffect, useState} from "react";
-import PopupWithImage from "./PopupWithImage";
+import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
@@ -162,7 +162,7 @@ function App() {
           hidePopupByClickAround={hidePopupByClickAround}
           waiting={waiting || 'Добавить'}
         />
-        <PopupWithImage
+        <ImagePopup
           onClose={closeAllPopups}
           card={selectedCard}
           hidePopupByClickAround={hidePopupByClickAround}
