@@ -3,7 +3,10 @@ import close from "../images/Close.svg";
 const PopupConfirm = () => {
   return(
     <div className="popup popup_type_confirm">
-      <form id="form-remove" className="popup__container popup__container_size_mini">
+      <form
+        id="form-remove"
+        className="popup__container popup__container_size_mini"
+      >
         <button
           type="button"
           id="close-remove"
