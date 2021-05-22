@@ -1,25 +1,11 @@
 import editButton from "../images/EditButton.svg";
 import plus from "../images/plus.svg";
-import {useEffect, useState} from "react";
-import api from '../utils/Api'
+import {useContext} from "react";
 import Card from "./Card";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
-const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) => {
-  const [userName, setUserName] = useState('')
-  const [userDescription, setUserDescription] = useState('')
-  const [userAvatar, setUserAvatar] = useState('')
-  const [cards, setCards] = useState([])
-
-  useEffect(() => {
-    Promise.all([api.getUserInfo(),api.getInitialCards()])
-      .then(([{avatar, about, name}, cards]) => {
-        setUserAvatar(avatar)
-        setUserDescription(about)
-        setUserName(name)
-        setCards(cards)
-      })
-      .catch(e => console.log(e))
-  }, [])
+const Main = ({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete, getCardId }) => {
+  const { name, avatar, about } = useContext(CurrentUserContext)
 
   return(
     <main className="main">
@@ -28,46 +14,37 @@ const Main = ({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) => {
           onClick={onEditAvatar}
           type="button"
           className="profile__edit-avatar"
-          style={{ backgroundImage: `url(${userAvatar})` }}
+          style={{ backgroundImage: `url(${avatar})` }}
         >
           <div className="profile__avatar-overlay" />
         </button>
         <div className="profile__info">
           <div className="profile__flex-row">
-            <h1 className="profile__name">{userName}</h1>
-            <button
-              onClick={onEditProfile}
-              className="profile__edit-button"
-            >
-              <img
-                src={editButton}
-                alt="редкатировать"
-                className="profile__edit-button-icon"
-              />
+            <h1 className="profile__name">{name}</h1>
+            <button onClick={onEditProfile} className="profile__edit-button">
+              <img src={editButton} alt="редкатировать"
+                   className="profile__edit-button-icon" />
             </button>
           </div>
-          <p className="profile__status">{userDescription}</p>
+          <p className="profile__status">{about}</p>
         </div>
-        <button
-          onClick={onAddPlace}
-          className="profile__add-button"
-        >
-          <img
-            src={plus}
-            alt="добавить"
-            className="profile__add-button-icon"
-          />
+        <button onClick={onAddPlace} className="profile__add-button">
+          <img src={plus} alt="добавить" className="profile__add-button-icon" />
         </button>
       </section>
       <section className="cards container">
-        {cards.map(({link, name, likes, _id}) => (
+        {cards.map(({link, _id, name, likes, owner}) => (
           <Card
             link={link}
+            cardId={_id}
             name={name}
             likes={likes}
             onCardClick={onCardClick}
-            key={_id}
-          />
+            onLikeClick={onCardLike}
+            onCardDelete={onCardDelete}
+            owner={owner}
+            getCardId={getCardId}
+            key={_id} />
         ))}
       </section>
     </main>

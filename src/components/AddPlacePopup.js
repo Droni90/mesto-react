@@ -20,10 +20,36 @@ const AddPlacePopup = ({isOpen, onClose, onAddPlace, hidePopupByClickAround, wai
     evt.target.reset()
   }
   return(
-    <PopupWithForm name='add' title='Новое место' isOpen={isOpen} container='popup__container' waiting={waiting} hidePopupByClickAround={hidePopupByClickAround} onClose={onClose} handleSubmit={handleSubmit}>
-      <input onChange={onChaneName} name="name" type="text" id="popup__name-add" className="popup__input" placeholder="Название" required minLength="2" maxLength="30" />
+    <PopupWithForm
+      name='add'
+      title='Новое место'
+      isOpen={isOpen}
+      container='popup__container'
+      waiting={waiting}
+      hidePopupByClickAround={hidePopupByClickAround}
+      onClose={onClose}
+      handleSubmit={handleSubmit}>
+      <input
+        onChange={onChaneName}
+        name="name"
+        type="text"
+        id="popup__name-add"
+        className="popup__input"
+        placeholder="Название"
+        required
+        minLength="2"
+        maxLength="30"
+      />
       <span className="popup__name-add-error" />
-      <input onChange={onChaneLink} name="link" type="url" id="popup__link-add" className="popup__input" placeholder="Ссылка на картинку" required />
+      <input
+        onChange={onChaneLink}
+        name="link"
+        type="url"
+        id="popup__link-add"
+        className="popup__input"
+        placeholder="Ссылка на картинку"
+        required
+      />
       <span className="popup__link-add-error" />
     </PopupWithForm>
   )
