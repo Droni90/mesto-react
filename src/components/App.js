@@ -3,7 +3,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import {useEffect, useState} from "react";
 import ImagePopup from "./ImagePopup";
-import api from "../utils/Api";
+import api from "../utils/api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";

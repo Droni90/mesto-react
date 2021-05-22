@@ -1,17 +1,11 @@
 import close from "../images/Close.svg";
 
-<<<<<<<< HEAD:src/components/ImagePopup.js
 const ImagePopup = ({card, onClose, hidePopupByClickAround}) => {
   return(
     <div
       className={card.isOpened ? `popup popup_type_photo popup_status_opened` : `popup popup_type_photo`}
       onMouseDown={hidePopupByClickAround}
     >
-========
-const PopupWithImage = ({card, onClose, hidePopupByClickAround}) => {
-  return(
-    <div className={card.isOpened ? `popup popup_type_photo popup_status_opened` : `popup popup_type_photo`} onMouseDown={hidePopupByClickAround}>
->>>>>>>> origin/sprint11:src/components/PopupWithImage.js
       <div className="popup__photo-container">
         <img src={card.link} alt={card.name} className="popup__img" />
         <button onClick={onClose} type="button" id="close-photo" className="popup__close">
