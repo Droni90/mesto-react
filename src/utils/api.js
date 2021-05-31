@@ -2,21 +2,21 @@ class Api {
   constructor(options) {
     this._options = options
   }
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
 
   getInitialCards() {
     return fetch('https://mesto.nomoreparties.co/v1/cohort-23/cards', this._options)
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject(`Ошибка: ${res.status}`)
-      )
+      .then(this._checkResponse)
   }
 
   getUserInfo() {
       return fetch('https://mesto.nomoreparties.co/v1/cohort-23/users/me', this._options)
-        .then(res => res.ok
-          ? res.json()
-          : Promise.reject(`Ошибка: ${res.status}`)
-        )
+        .then(this._checkResponse)
   }
   //отправка инфо
   patchProfileInfo(inputsValue) {
@@ -26,10 +26,7 @@ class Api {
       method: 'PATCH',
     }
     return fetch('https://mesto.nomoreparties.co/v1/cohort-23/users/me', newOptions)
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject(`Ошибка: ${res.status}`)
-      )
+      .then(this._checkResponse)
   }
   // Отправляет информацию о пользователе на сервер
   patchAddCard(inputsValue) {
@@ -39,10 +36,7 @@ class Api {
       method:'POST',
     }
     return fetch('https://mesto.nomoreparties.co/v1/cohort-23/cards', newOptions)
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject(`Ошибка: ${res.status}`)
-      )
+      .then(this._checkResponse)
   }
   //Удаляем карту
   removeCard(cardId) {
@@ -51,10 +45,7 @@ class Api {
       method:'DELETE',
     }
     return fetch(`https://mesto.nomoreparties.co/v1/cohort-23/cards/${cardId}`, newOptions)
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject(`Ошибка: ${res.status}`)
-      )
+      .then(this._checkResponse)
   }
   //Ставим лайк
   changeLikeCardStatus(cardId, isLiked) {
@@ -67,10 +58,7 @@ class Api {
       method:'DELETE',
     }
     return fetch(`https://mesto.nomoreparties.co/v1/cohort-23/cards/likes/${cardId}`, isLiked ? delOptions : putOptions)
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject(`Ошибка: ${res.status}`)
-      )
+      .then(this._checkResponse)
   }
 
   //Обновляем аватар
@@ -81,10 +69,7 @@ class Api {
       method: 'PATCH',
     }
     return fetch(`https://mesto.nomoreparties.co/v1/cohort-23/users/me/avatar`, newOptions)
-      .then(res => res.ok
-        ? res.json()
-        : Promise.reject(`Ошибка: ${res.status}`)
-      )
+      .then(this._checkResponse)
   }
 }
 
