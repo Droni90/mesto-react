@@ -35,10 +35,12 @@ function App() {
   //Обработчик лайка
   const handleCardLike = (likes, cardId, currentUserId) => {
     const isLiked = likes.some(like => like._id === currentUserId);
-    api.changeLikeCardStatus(cardId, isLiked).then((newCard) => {
+    api.changeLikeCardStatus(cardId, isLiked)
+      .then((newCard) => {
       const newCards = cards.map((card) => card._id === cardId ? newCard : card);
       setCards(newCards);
-    });
+    })
+      .catch(e => console.log(e))
   }
 
 // Обработчики открытия/закрытия попапов
@@ -64,41 +66,49 @@ function App() {
 
   //обработчик информации о пользователе
   const handleUpdateUser = (userInfo) => {
-    api.patchProfileInfo(userInfo).then((data) => {
+    api.patchProfileInfo(userInfo)
+      .then((data) => {
       setCurrentUser(data)
       setWaiting(null)
       closeAllPopups()
     })
+      .catch(e => console.log(e))
     setWaiting('Сохранение...')
   }
   //обработчик обновления аватара
   const handleUpdateAvatar = (avatar) => {
-    api.refreshAvatar(avatar).then((data) => {
+    api.refreshAvatar(avatar)
+      .then((data) => {
       setCurrentUser(data)
       setWaiting(null)
       closeAllPopups()
     })
+      .catch(e => console.log(e))
     setWaiting('Сохранение...')
   }
 
   // обработчик удаление карточки
   const handleCardDelete = () => {
-    api.removeCard(cardId).then(() => {
+    api.removeCard(cardId)
+      .then(() => {
       const newCards = cards.filter(card => card._id !== cardId)
       setWaiting(null)
       setCards(newCards)
       closeAllPopups()
     })
+      .catch(e => console.log(e))
     setWaiting('Удаление...')
   }
 
   //обработчик сабмита добавление картинки
   const handleAddPlaceSubmit = newCard => {
-    api.patchAddCard(newCard).then((newCard) => {
+    api.patchAddCard(newCard)
+      .then((newCard) => {
       setCards([newCard, ...cards])
       setWaiting(null)
       closeAllPopups()
     })
+      .catch(e => console.log(e))
     setWaiting('Добавление...')
   }
   // обработчик для открытия картинки

@@ -4,7 +4,7 @@ const PopupWithForm = ({ name, title, isOpen, container, onClose, children, hand
   return(
     <div
       onMouseDown={hidePopupByClickAround}
-      className={isOpen ? `popup popup_type_${name} popup_status_opened` : `popup popup_type_${name}`}
+      className={`popup popup_type_${name} ${isOpen ? 'popup_status_opened' : '' } `}
     >
       <form
         onSubmit={handleSubmit}
@@ -22,7 +22,7 @@ const PopupWithForm = ({ name, title, isOpen, container, onClose, children, hand
         <h2 className="popup__title">{title}</h2>
         { children }
         <button
-          type="submit" className="popup__submit popup__submit_edit">{ waiting }</button>
+          type="submit" className="popup__submit">{ waiting }</button>
       </form>
     </div>
   )

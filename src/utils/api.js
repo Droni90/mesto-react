@@ -1,6 +1,7 @@
 class Api {
   constructor(options) {
     this._options = options
+    this._baseUrl = options.baseUrl
   }
   _checkResponse(res) {
     if (res.ok) {
@@ -10,12 +11,13 @@ class Api {
   }
 
   getInitialCards() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-23/cards', this._options)
+    console.log(this._baseUrl)
+    return fetch(`${this._baseUrl}/cards`, this._options)
       .then(this._checkResponse)
   }
 
   getUserInfo() {
-      return fetch('https://mesto.nomoreparties.co/v1/cohort-23/users/me', this._options)
+      return fetch(`${this._baseUrl}/users/me`, this._options)
         .then(this._checkResponse)
   }
   //отправка инфо
@@ -25,7 +27,7 @@ class Api {
       body: JSON.stringify(inputsValue),
       method: 'PATCH',
     }
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-23/users/me', newOptions)
+    return fetch(`${this._baseUrl}/users/me`, newOptions)
       .then(this._checkResponse)
   }
   // Отправляет информацию о пользователе на сервер
@@ -35,7 +37,7 @@ class Api {
       body: JSON.stringify(inputsValue),
       method:'POST',
     }
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-23/cards', newOptions)
+    return fetch(`${this._baseUrl}/cards`, newOptions)
       .then(this._checkResponse)
   }
   //Удаляем карту
@@ -44,7 +46,7 @@ class Api {
       ...this._options,
       method:'DELETE',
     }
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-23/cards/${cardId}`, newOptions)
+    return fetch(`${this._baseUrl}/cards/${cardId}`, newOptions)
       .then(this._checkResponse)
   }
   //Ставим лайк
@@ -57,7 +59,7 @@ class Api {
       ...this._options,
       method:'DELETE',
     }
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-23/cards/likes/${cardId}`, isLiked ? delOptions : putOptions)
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, isLiked ? delOptions : putOptions)
       .then(this._checkResponse)
   }
 
@@ -68,7 +70,7 @@ class Api {
       body: JSON.stringify(inputsValue),
       method: 'PATCH',
     }
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-23/users/me/avatar`, newOptions)
+    return fetch(`${this._baseUrl}/users/me/avatar`, newOptions)
       .then(this._checkResponse)
   }
 }

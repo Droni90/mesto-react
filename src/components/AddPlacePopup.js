@@ -4,10 +4,10 @@ import {useState} from "react";
 const AddPlacePopup = ({isOpen, onClose, onAddPlace, hidePopupByClickAround, waiting}) => {
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
-  const onChaneName = (evt) => {
+  const onChangeName = (evt) => {
     setName(evt.target.value)
   }
-  const onChaneLink = (evt) => {
+  const onChangeLink = (evt) => {
     setLink(evt.target.value)
   }
   const handleSubmit = (evt) => {
@@ -17,7 +17,8 @@ const AddPlacePopup = ({isOpen, onClose, onAddPlace, hidePopupByClickAround, wai
       url: name,
       link: link,
     })
-    evt.target.reset()
+    setName('')
+    setLink('')
   }
   return(
     <PopupWithForm
@@ -30,8 +31,9 @@ const AddPlacePopup = ({isOpen, onClose, onAddPlace, hidePopupByClickAround, wai
       onClose={onClose}
       handleSubmit={handleSubmit}>
       <input
-        onChange={onChaneName}
+        onChange={onChangeName}
         name="name"
+        value={name}
         type="text"
         id="popup__name-add"
         className="popup__input"
@@ -42,8 +44,9 @@ const AddPlacePopup = ({isOpen, onClose, onAddPlace, hidePopupByClickAround, wai
       />
       <span className="popup__name-add-error" />
       <input
-        onChange={onChaneLink}
+        onChange={onChangeLink}
         name="link"
+        value={link}
         type="url"
         id="popup__link-add"
         className="popup__input"
